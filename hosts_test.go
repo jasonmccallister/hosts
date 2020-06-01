@@ -18,6 +18,39 @@ func TestRead(t *testing.T) {
 		wantErr bool
 	}{
 		{
+			name: "can find records that are valid records but also double commented out",
+			args: args{rdr: strings.NewReader(`# this is a comment
+##
+127.0.0.1 domain.com example.com
+# 192.168.5.5 domain.com example.com`)},
+			want: []Record{
+				{
+					Line:        1,
+					IsCommented: true,
+					IP:          "",
+					Hosts:       nil,
+				},
+				{
+					Line:        2,
+					IsCommented: true,
+					IP:          "",
+					Hosts:       nil,
+				},
+				{
+					Line:        3,
+					IsCommented: false,
+					IP:          "127.0.0.1",
+					Hosts:       []string{"domain.com", "example.com"},
+				},
+				{
+					Line:        4,
+					IsCommented: true,
+					IP:          "192.168.5.5",
+					Hosts:       []string{"domain.com", "example.com"},
+				},
+			},
+		},
+		{
 			name: "can find records that are valid records but also commented out",
 			args: args{rdr: strings.NewReader(`# this is a comment
 127.0.0.1 domain.com example.com

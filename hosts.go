@@ -103,7 +103,9 @@ func Read(rdr io.Reader) ([]Record, error) {
 			h := 1
 
 			if record.IsCommented {
-				r = row[1]
+				if len(row) > 2 {
+					r = row[1]
+				}
 				h = 2
 			}
 
