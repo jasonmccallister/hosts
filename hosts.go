@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	WindowsHostsFileLocation = ""
+	WindowsHostsFileLocation = `C:\\Windows\\System32\\Drivers\\etc\\hosts`
 	NixHostsFilesLocation    = "/etc/hosts"
 )
 
